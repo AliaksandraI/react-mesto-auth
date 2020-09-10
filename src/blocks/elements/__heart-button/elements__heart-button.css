@@ -1,0 +1,32 @@
+
+.elements__heart-button {
+    background: url(../../../images/heart.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+    cursor: pointer;
+    height: 18px;
+    width: 21px;
+    border: none;
+    margin: 0;
+   
+}
+
+
+.elements__heart-button:hover {
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.elements__heart-button_active {
+    opacity: 1;
+    background: url(../../../images/heart_active.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+    cursor: pointer;
+    height: 18px;
+    width: 21px;
+    border: none;
+    margin: 0;
+  }

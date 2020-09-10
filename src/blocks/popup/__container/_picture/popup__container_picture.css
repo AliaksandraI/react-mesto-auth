@@ -1,0 +1,19 @@
+
+.popup__container_picture {
+    width: unset;
+    max-width: 75vw;
+    max-height: 75vh;
+    background: none;
+    box-shadow: none;
+}
+
+@media screen and (max-width: 500px) {
+    
+    .popup__container_picture {
+        width: unset;
+        max-width: 75vw;
+        max-height: 75vh;
+
+    }
+}
+
