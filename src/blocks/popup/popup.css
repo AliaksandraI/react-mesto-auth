@@ -12,6 +12,7 @@
 
 
 
+
 .popup {
     position: fixed;
     top:0;
@@ -28,6 +29,9 @@
 
 
 
-
+.popup_login {
+    opacity: 1;
+    visibility: visible;
+}
 
 
