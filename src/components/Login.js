@@ -53,7 +53,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="page">
-       <Header />
+       <Header link="/signup" title="Регистрация"/>
 
        <LoginForm name="login" title="Вход" buttonName="Войти"  onSubmit={this.handleSubmit}>
             <div className="login__footer">

@@ -2,17 +2,15 @@
 .login{
   display: flex;
   justify-content: center;
-
 }
 
 .login__form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 358px;
-    margin: 60px 0;
-    
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 358px;
+  margin: 60px 0;
+}
 
 .login__title{
   font-family: 'Inter','Arial', 'Helvetica', sans-serif;
@@ -26,16 +24,16 @@
 
 }
 .login__input {
-font-family: 'Inter','Arial', 'Helvetica', sans-serif;
-font-style: normal;
-font-weight: normal;
-color: #CCCCCC;
-font-size: 14px;
-background-color:#000000;
-border: none;
-border-bottom:2px solid #CCCCCC; 
-margin-top: 30px;
-color: #CCCCCC;
+  font-family: 'Inter','Arial', 'Helvetica', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #CCCCCC;
+  font-size: 14px;
+  background-color:#000000;
+  border: none;
+  border-bottom:2px solid #CCCCCC; 
+  margin-top: 30px;
+  color: #CCCCCC;
 }
 
 .login__submit-button{
@@ -92,5 +90,4 @@ color: #CCCCCC;
 
 .login__footer-link :hover {
   opacity: 0.6;
-  transition: opacity 1s linear 0.5s;
 }

@@ -50,9 +50,8 @@ class MyProfile extends React.Component {
     render () {
         return (        
             <div className="page">
-                <Header />
                 <CurrentUserContext.Provider value={this.state.currentUser}>
-
+                <Header userEmail={this.state.currentUser.name} title="Выйти"/>
                 <Main
                     onEditAvatar={this.handleEditAvatarClick}
                     onEditProfile={this.handleEditProfileClick}

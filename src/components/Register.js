@@ -42,7 +42,7 @@ class Register extends React.Component {
   render(){
     return (
       <div className="page">
-       <Header />
+       <Header link="/signin" title="Войти" />
 
        <LoginForm name="login" title="Регистрация" buttonName="Зарегистрироваться"  onSubmit={this.handleSubmit}>
             <div className="login__footer">
