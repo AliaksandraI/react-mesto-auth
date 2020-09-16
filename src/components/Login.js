@@ -58,7 +58,7 @@ class Login extends React.Component {
        <LoginForm name="login" title="Вход" buttonName="Войти"  onSubmit={this.handleSubmit}>
             <div className="login__footer">
             <p className="login__footer-title">Ещё не зарегистрированы?</p>
-            <Link to="/register" className="login__footer-link">Регистрация</Link>
+            <Link to="/signup" className="login__footer-link">Регистрация</Link>
           </div>
         </LoginForm>
 

@@ -56,6 +56,10 @@ color: #CCCCCC;
   padding: 0;
 }
 
+.login__submit-button :hover{
+  opacity: 0.85;
+}
+
 .login__footer {
   font-family: 'Inter','Arial', 'Helvetica', sans-serif;
   font-style: normal;
@@ -64,6 +68,7 @@ color: #CCCCCC;
   color: #FFFFFF;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   
 }
 .login__footer-title {
@@ -86,55 +91,6 @@ color: #CCCCCC;
 }
 
 .login__footer-link :hover {
-  opacity: 0.3;
+  opacity: 0.6;
   transition: opacity 1s linear 0.5s;
 }
-/*
-.login {
-    color: white;
-    display: flex;
-    font-family: 'Roboto';
-    flex-direction: column;
-    justify-content: center;
-  }
-  .login__welcome {
-    font-size: 24px;
-  }
-  .login__form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .login__form input {
-    
-  }
-  .login__form label {
-    font-size: 18px;
-    margin-top: 12px;
-    margin-bottom: 6px;
-  }
-  .login__signup {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 32px;
-  }
-  .login__signup p {
-    margin-right: 12px;
-  }
-  .signup__link {
-    color: white;
-  }
-  .login__button-container {
-    display: flex;
-    justify-content: center;
-  }
-  .login__link {
-    text-align: center;
-    margin-top: 32px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-    font-size: 16px;
-  }
-  */

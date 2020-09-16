@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Header from './Header';
 import * as auth from '../auth.js';
-//import './styles/Register.css';
+import LoginForm from './LoginForm';
 
 class Register extends React.Component {
   constructor(props) {
@@ -41,31 +41,16 @@ class Register extends React.Component {
 
   render(){
     return (
-        <div className="page">
-        <Header />
-        <div className="login">
-          <p className="login__welcome">
-            Вход
-        </p>
-          <form onSubmit={this.handleSubmit} className="login__form">
-            <label for="Email">
-              Email:
-          </label>
-            <input required id="usernameEmail" name="usernameEmail" type="text" value={this.state.username} onChange={this.handleChange} />
-            <label for="Password">
-              Пароль:
-          </label>
-            <input required id="password" name="password" type="password" value={this.state.password} onChange={this.handleChange} />
-            <div className="login__button-container">
-              <button type="submit" onSubmit={this.handleSubmit} className="login__link">Войти</button>
-            </div>
-          </form>
+      <div className="page">
+       <Header />
 
-          <div className="login__signup">
-            <p>Ещё не зарегистрированы?</p>
-            <Link to="/register" className="signup__link">Зарегистрироваться</Link>
+       <LoginForm name="login" title="Регистрация" buttonName="Зарегистрироваться"  onSubmit={this.handleSubmit}>
+            <div className="login__footer">
+            <p className="login__footer-title">Уже зарегистрированы?</p>
+            <Link to="/signin" className="login__footer-link">Войти</Link>
           </div>
-        </div>
+        </LoginForm>
+
       </div>
     );
   }
