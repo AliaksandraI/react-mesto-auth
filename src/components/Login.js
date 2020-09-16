@@ -55,22 +55,10 @@ class Login extends React.Component {
       <div className="page">
        <Header />
 
-       <LoginForm name="login" title="Вход" buttonName="Войти" isSubmitActive={true} isOpen={this.props.isOpen} onClose={this.onCloseSignInPopup} onSubmit={this.handleSubmit}>
-            <input id="name-input" type="text" required minLength="2" maxLength="40"
-                pattern="[A-Za-zА-Яа-яЁё\s\-]+$" placeholder="Email"
-                className="popup__text popup__text_type_name form__input"
-                onChange={this.handleChange}
-                ></input>
-            <span id="name-input-error" className="form__input-error"></span>
-            <input id="profession-input" type="password" required minLength="2" maxLength="200"
-                placeholder="Пароль"
-                className="popup__text popup__text_type_profession form__input"
-                onChange={this.handleChange}
-                ></input>
-            <span id="profession-input-error" className="form__input-error"></span>
-            <div className="login__signup">
-            <p>Ещё не зарегистрированы?</p>
-            <Link to="/register" className="signup__link">Регистрация</Link>
+       <LoginForm name="login" title="Вход" buttonName="Войти"  onSubmit={this.handleSubmit}>
+            <div className="login__footer">
+            <p className="login__footer-title">Ещё не зарегистрированы?</p>
+            <Link to="/register" className="login__footer-link">Регистрация</Link>
           </div>
         </LoginForm>
 

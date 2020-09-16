@@ -7,19 +7,26 @@ class LoginForm extends React.Component {
         super(props);
     }
   
-    render () {
+    render() {
 
         return (
 
-            <section className={`popup popup_${this.props.name} ${this.props.isOpen ? "popup_opened" : ""}`}>
-                    <form name={`popup-${this.props.name}-form`} method="get" action="#" className="popup__container form" noValidate onSubmit={this.props.onSubmit}>
-                        <h2 className="popup__title">{this.props.title}</h2>
-                        {this.props.children}
-                        <button type="submit" className={`popup__button form__submit ${this.props.isSubmitActive ? "" : "form__submit_inactive"}`}>{this.props.buttonName}</button>
-                        <button aria-label="close" type="button" className="popup__close-button" onClick={this.props.onClose} >
-                            <img src={closeButtonPath} alt="Кнопка закрыть" className="popup__close-button-image"></img>
-                        </button>
-                    </form>
+            <section className="login">
+                <form name={`popup-${this.props.name}-form`} method="get" action="#" className="login__form" noValidate onSubmit={this.props.onSubmit}>
+                    <h2 className="login__title">{this.props.title}</h2>
+                    <input id="name-input" type="text" required minLength="2" maxLength="40"
+                        placeholder="Email"
+                        className="login__input"
+                        onChange={this.handleChange}
+                    ></input>
+                    <input id="profession-input" type="password" required minLength="2" maxLength="200"
+                        placeholder="Пароль"
+                        className="login__input"
+                        onChange={this.handleChange}
+                    ></input>
+                    <button type="submit" className={` login__submit-button`}>{this.props.buttonName}</button>
+                    {this.props.children}
+                </form>
             </section>
 
         );

@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 
-import Header from './Header';
 import MyProfile from './MyProfile';
 import Login from './Login.js';
 import Register from './Register.js';
