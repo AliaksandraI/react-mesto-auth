@@ -3,13 +3,15 @@ import { Link, withRouter } from 'react-router-dom';
 import Header from './Header';
 import * as auth from '../auth.js';
 import LoginForm from './LoginForm';
+import InfoTooltip from './InfoTooltip';
 
 class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
         username: '',
-        password: ''
+        password: '',
+        isRegistrationPopupOpen: true,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,25 +22,38 @@ class Register extends React.Component {
       [name]: value 
     });
   }
-  handleChangeCals = (e) => {
-    const {name, value} = e.target;
-    this.setState({
-      [name]: value 
-    });
-  }
+  
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.password === this.state.confirmPassword){
       auth.register(this.state.username, this.state.password).then((res) => {
         if(res){
           this.props.history.push('/signin');
+          this.handleGoodRegistration();
         } else {
           console.log('Произошла ошибка.');
+          this.handleBadRegistration();
         }
       });
     }
   }
 
+  handleClose(){
+    this.setState({ isRegistrationPopupOpen: false })
+  }
+
+  handleGoodRegistration = () => {
+      return (
+        <InfoTooltip title="Вы успешно зарегистрировались!" isOpen={this.state.isRegistrationPopupOpen} registered={true} onClose={this.handleClose}  />
+      )
+  }
+
+  handleBadRegistration = () => {
+    return (
+      <InfoTooltip title="Что-то пошло не так! Попробуйте ещё раз." isOpen={this.state.isRegistrationPopupOpen} registered={false} onClose={this.handleClose}  />
+    )
+  }
+  
   render(){
     return (
       <div className="page">

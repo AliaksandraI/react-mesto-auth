@@ -64,7 +64,7 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/myprofile" loggedIn={this.state.loggedIn} component={MyProfile} />
 
-                        <ProtectedRoute path="/tips" loggedIn={this.state.loggedIn} component={InfoTooltip} />
+                        <Route path="/tips" loggedIn={this.state.loggedIn} component={InfoTooltip} />
 
                         <Route path="/signup">
                             <Register />
