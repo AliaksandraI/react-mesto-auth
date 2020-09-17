@@ -11,11 +11,15 @@ class Register extends React.Component {
     this.state = {
         username: '',
         password: '',
-        isRegistrationPopupOpen: true,
+        isRegistrationPopupOpen: false,
+        infoTooltipTitle: null,
+        infoTooltipRegistered: false,
+
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleChange = (e) => {
     const {name, value} = e.target;
     this.setState({
@@ -25,17 +29,16 @@ class Register extends React.Component {
   
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.password === this.state.confirmPassword){
       auth.register(this.state.username, this.state.password).then((res) => {
         if(res){
-          this.props.history.push('/signin');
-          this.handleGoodRegistration();
+        this.props.history.push('/signin');
+         this.handleGoodRegistration();
         } else {
           console.log('Произошла ошибка.');
           this.handleBadRegistration();
         }
       });
-    }
+    
   }
 
   handleClose(){
@@ -43,15 +46,15 @@ class Register extends React.Component {
   }
 
   handleGoodRegistration = () => {
-      return (
-        <InfoTooltip title="Вы успешно зарегистрировались!" isOpen={this.state.isRegistrationPopupOpen} registered={true} onClose={this.handleClose}  />
-      )
+      this.setState({ isRegistrationPopupOpen: true,
+        infoTooltipTitle: "Вы успешно зарегистрировались!",
+        infoTooltipRegistered: false })
   }
 
   handleBadRegistration = () => {
-    return (
-      <InfoTooltip title="Что-то пошло не так! Попробуйте ещё раз." isOpen={this.state.isRegistrationPopupOpen} registered={false} onClose={this.handleClose}  />
-    )
+    this.setState({ isRegistrationPopupOpen: true,
+      infoTooltipTitle: "Что-то пошло не так! Попробуйте ещё раз.",
+      infoTooltipRegistered: true })
   }
   
   render(){
@@ -59,13 +62,14 @@ class Register extends React.Component {
       <div className="page">
        <Header link="/signin" title="Войти" />
 
-       <LoginForm name="login" title="Регистрация" buttonName="Зарегистрироваться"  onSubmit={this.handleSubmit}>
+       <LoginForm name="login" title="Регистрация" buttonName="Зарегистрироваться"  onChange={this.handleChange} onSubmit={this.handleSubmit}>
             <div className="login__footer">
             <p className="login__footer-title">Уже зарегистрированы?</p>
             <Link to="/signin" className="login__footer-link">Войти</Link>
           </div>
         </LoginForm>
 
+        <InfoTooltip title={this.state.infoTooltipTitle} isOpen={this.state.isRegistrationPopupOpen} registered={this.state.infoTooltipRegistered} onClose={this.handleClose}  />
       </div>
     );
   }

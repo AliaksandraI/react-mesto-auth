@@ -19,22 +19,28 @@ class Login extends React.Component {
   }
 
   handleChange(e) {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     this.setState({
-      [name]: value
+      [name]: value 
     });
   }
 
+
+
+
+
   handleSubmit(e) {
     e.preventDefault();
-    if (!this.state.username || !this.state.password) {
-      return;
-    }
+    //if (!this.state.username || !this.state.password) {
+    //  return;
+    //}
     auth.authorize(this.state.username, this.state.password)
       .then((data) => {
-        if (data.jwt) {
-          this.setState({ username: '', password: '' }, () => {
-            this.props.handleLogin(data.user.ru_cal_goal.calGoal);
+        console.log(data.token);
+        if (data.token) {
+          this.setState({ username: '', password: '' }, 
+          () => {
+            this.props.handleLogin();
             this.props.history.push('/myprofile');
           })
         }
@@ -55,7 +61,7 @@ class Login extends React.Component {
       <div className="page">
        <Header link="/signup" title="Регистрация"/>
 
-       <LoginForm name="login" title="Вход" buttonName="Войти"  onSubmit={this.handleSubmit}>
+       <LoginForm name="login" title="Вход" buttonName="Войти" onChange={this.handleChange}  onSubmit={this.handleSubmit}>
             <div className="login__footer">
             <p className="login__footer-title">Ещё не зарегистрированы?</p>
             <Link to="/signup" className="login__footer-link">Регистрация</Link>

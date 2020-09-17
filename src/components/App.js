@@ -20,8 +20,12 @@ class App extends React.Component {
         super();
       
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            UserData:{
+                email: "email"
+            }
         }
+
         this.handleLogin = this.handleLogin.bind(this);
         this.handleTokenCheck = this.handleTokenCheck.bind(this);
     }
@@ -30,31 +34,28 @@ class App extends React.Component {
         this.handleTokenCheck();
     } 
 
-    handleTokenCheck(){
-        if (localStorage.getItem('jwt')){
-        const jwt = localStorage.getItem('jwt');
-        // проверяем токен пользователя
-        auth.checkToken(jwt).then((res) => {
-            if(res){
-                let UserData = {
-                    username: res.username,
-                    email: res.email
+    handleTokenCheck() {
+        if (localStorage.getItem('jwt')) {
+            const jwt = localStorage.getItem('jwt');
+            auth.checkToken(jwt).then((res) => {
+                if (res) {
+                    this.setState({
+                        loggedIn: true,
+                        UserData:{
+                            email: res.email
+                        }
+                    }, () => {
+                        //this.props.history.push("/");
+                    });
                 }
-                this.setState({
-                    loggedIn: true,
-                    UserData
-                }, () => {
-                    this.props.history.push("/");
-                });
-            }
-        }); 
-      }
+            });
+        }
     }
 
     handleLogin (){
-    this.setState({
-        loggedIn: true
-    })
+        this.setState({
+            loggedIn: true
+        })
     }
 
     render() {
@@ -62,7 +63,9 @@ class App extends React.Component {
             <>
                 <main className="content">
                     <Switch>
-                        <Route path="/myprofile" loggedIn={this.state.loggedIn} component={MyProfile} />
+                        <ProtectedRoute path="/myprofile" loggedIn={this.state.loggedIn}>
+                            <MyProfile  userEmail={this.state.UserData.email} />
+                        </ProtectedRoute>
 
                         <Route path="/tips" loggedIn={this.state.loggedIn} component={InfoTooltip} />
 
