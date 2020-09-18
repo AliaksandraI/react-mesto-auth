@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter, Link } from 'react-router-dom';
 
 
 import MyProfile from './MyProfile';
@@ -45,7 +45,7 @@ class App extends React.Component {
                             email: res.email
                         }
                     }, () => {
-                        //this.props.history.push("/");
+                        this.props.history.push("/");
                     });
                 }
             });
@@ -58,14 +58,18 @@ class App extends React.Component {
         })
     }
 
+    handleLogout() {
+        localStorage.removeItem('jwt');
+        
+    }
+
     render() {
         return (
             <>
                 <main className="content">
                     <Switch>
-                        <ProtectedRoute path="/myprofile" loggedIn={this.state.loggedIn}>
-                            <MyProfile  userEmail={this.state.UserData.email} />
-                        </ProtectedRoute>
+                        <ProtectedRoute path="/myprofile" loggedIn={this.state.loggedIn} userEmail={this.state.UserData.email} handleLogout={this.handleLogout} component={MyProfile} />
+                       
 
                         <Route path="/tips" loggedIn={this.state.loggedIn} component={InfoTooltip} />
 

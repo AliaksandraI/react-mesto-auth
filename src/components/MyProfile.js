@@ -51,7 +51,7 @@ class MyProfile extends React.Component {
         return (        
             <div className="page">
                 <CurrentUserContext.Provider value={this.state.currentUser}>
-                <Header userEmail={this.props.userEmail} title="Выйти"/>
+                <Header link="/signin" userEmail={this.props.userEmail} handleLogout={this.props.handleLogout} title="Выйти"/>
                 <Main
                     onEditAvatar={this.handleEditAvatarClick}
                     onEditProfile={this.handleEditProfileClick}

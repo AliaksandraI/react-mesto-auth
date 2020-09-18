@@ -18,7 +18,6 @@ export const register = (email, password) => {
 };
 
 export const authorize = (email, password) => {
-  console.log({email, password})
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -26,10 +25,10 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({email, password})
   })
-  .then((response => response.json()))
-  .then((data) => {
-    console.log(data)
-    if (data){
+  .then((res) => {
+    console.log(res.status);
+    if (!res.status===400){
+      let data = res.json()
       localStorage.setItem('jwt', data.token);
       return data;
     }

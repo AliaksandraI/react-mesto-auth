@@ -30,8 +30,9 @@ class Register extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
       auth.register(this.state.username, this.state.password).then((res) => {
+        console.log(res);
         if(res){
-        this.props.history.push('/signin');
+        //this.props.history.push('/signin');
          this.handleGoodRegistration();
         } else {
           console.log('Произошла ошибка.');

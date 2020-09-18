@@ -15,7 +15,7 @@ class Header extends React.Component {
                 <a href="http://"><img src={logoPath} className="header__logo" alt="логотип Mesto"/></a>
                 <div className="header__menu-container">
                 <p className="header__user">{this.props.userEmail}</p>
-                <Link to={this.props.link} className="header__menu">{this.props.title}</Link>
+                <Link to={this.props.link} onClick={this.props.handleLogout} className="header__menu">{this.props.title}</Link>
                 </div>
             </header>
         );
