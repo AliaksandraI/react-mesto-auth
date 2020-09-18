@@ -32,8 +32,8 @@ class Register extends React.Component {
       auth.register(this.state.username, this.state.password).then((res) => {
         console.log(res);
         if(res){
-        //this.props.history.push('/signin');
          this.handleGoodRegistration();
+         //this.props.history.push('/');
         } else {
           console.log('Произошла ошибка.');
           this.handleBadRegistration();
@@ -49,13 +49,13 @@ class Register extends React.Component {
   handleGoodRegistration = () => {
       this.setState({ isRegistrationPopupOpen: true,
         infoTooltipTitle: "Вы успешно зарегистрировались!",
-        infoTooltipRegistered: false })
+        infoTooltipRegistered: true })
   }
 
   handleBadRegistration = () => {
     this.setState({ isRegistrationPopupOpen: true,
       infoTooltipTitle: "Что-то пошло не так! Попробуйте ещё раз.",
-      infoTooltipRegistered: true })
+      infoTooltipRegistered: false })
   }
   
   render(){

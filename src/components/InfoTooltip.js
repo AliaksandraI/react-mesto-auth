@@ -13,9 +13,9 @@ class InfoTooltip extends React.Component {
 
         return (
             <section className={`popup ${this.props.isOpen ? "popup_opened" : ""}`}>
-            <div className="popup__container form">
-                <img src={this.props.registered ? goodRegistrationPath : badRegistrationPath} alt="Кнопка закрыть" className="popup__close-button-image"></img>
-                <h2 className="popup__title">{this.props.title}</h2>
+            <div className="popup__container form popup__registration-form">
+                <img src={this.props.registered ? goodRegistrationPath : badRegistrationPath} alt="Регистрация" className="popup__registration-image"></img>
+                <h2 className="popup__title popup__registration-title">{this.props.title}</h2>
                 <button aria-label="close" type="button" className="popup__close-button" onClick={this.props.onClose} >
                     <img src={closeButtonPath} alt="Кнопка закрыть" className="popup__close-button-image"></img>
                 </button>

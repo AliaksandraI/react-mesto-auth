@@ -27,6 +27,19 @@
     transition: opacity 0.3s, visibility 0s linear 0.3s;
 } 
 
+.popup__registration-form{
+    min-height: 330px;
+    margin-top: 195px;
+}
 
+.popup__registration-image{
+    margin: 50px auto 0px;
+}
+
+.popup__registration-title{
+    margin-bottom: 60px ;
+    max-width: 358px;
+    text-align: center;
+}
 
 
