@@ -21,7 +21,6 @@
   color: #FFFFFF;
   text-align: center;
   margin: 0;
-
 }
 .login__input {
   font-family: 'Inter','Arial', 'Helvetica', sans-serif;
@@ -90,4 +89,27 @@
 
 .login__footer-link :hover {
   opacity: 0.6;
+}
+
+
+@media screen and (max-width: 425px)  {
+  .login__form {
+    max-width: 260px;
+  }
+  .login__submit-button{
+    width: 260px;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 173px 0 20px;
+  }
+  .login__title{
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .login__footer-title {
+    font-size: 12px;
+  }
+  .login__footer-link {
+    font-size: 12px;
+  }
 }

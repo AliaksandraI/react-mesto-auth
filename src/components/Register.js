@@ -30,10 +30,10 @@ class Register extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
       auth.register(this.state.username, this.state.password).then((res) => {
-        console.log(res);
         if(res){
+         this.props.history.push('/signin');
          this.handleGoodRegistration();
-         //this.props.history.push('/');
+        
         } else {
           console.log('Произошла ошибка.');
           this.handleBadRegistration();
@@ -42,8 +42,10 @@ class Register extends React.Component {
     
   }
 
-  handleClose(){
-    this.setState({ isRegistrationPopupOpen: false })
+  handleClose = () => {
+    this.setState({ isRegistrationPopupOpen: false });
+
+    
   }
 
   handleGoodRegistration = () => {

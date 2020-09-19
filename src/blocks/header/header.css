@@ -13,7 +13,7 @@
 .header__menu-container{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    padding-top: 8px;
 }
 .header__user{
     font-family: 'Inter','Arial', 'Helvetica', sans-serif;
@@ -50,5 +50,19 @@
         margin: 0;
         padding-top: 28px;
         padding-left: 27px;
+    }
+
+    .header__menu-container{
+        margin-right: 30px;
+    }
+
+}
+
+@media screen and (max-width: 425px) {
+    .header__user{
+        font-size: 14px;
+    }
+    .header__menu{
+        font-size: 14px;
     }
 }
