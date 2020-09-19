@@ -1,60 +1,57 @@
-import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import * as auth from '../auth.js';
-import Header from './Header';
-import LoginForm from './LoginForm';
-
+import React from 'react'
+import { withRouter, Link } from 'react-router-dom'
+import * as auth from '../auth.js'
+import Header from './Header'
+import LoginForm from './LoginForm'
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       username: '',
       password: '',
-      isOpen: true,
+      isOpen: true
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange(e) {
-    const {name, value} = e.target;
+  handleChange (e) {
+    const { name, value } = e.target
     this.setState({
-      [name]: value 
-    });
+      [name]: value
+    })
   }
 
-
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit (e) {
+    e.preventDefault()
     auth.authorize(this.state.username, this.state.password)
       .then((data) => {
         if (data.token) {
-          this.setState({ username: '', password: '' }, 
-          () => {
-            this.props.handleLogin();
-          })
+          this.setState({ username: '', password: '' },
+            () => {
+              this.props.handleLogin()
+            })
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
-  onCloseSignInPopup() {
-    this.props.onClose();
+  onCloseSignInPopup () {
+    this.props.onClose()
     this.setState = {
       username: '',
       password: ''
     }
   }
 
-  render() {
+  render () {
     return (
       <div className="page">
-       <Header link="/signup" title="Регистрация"/>
+        <Header link="/signup" title="Регистрация"/>
 
-       <LoginForm name="login" title="Вход" buttonName="Войти" onChange={this.handleChange}  onSubmit={this.handleSubmit}>
-            <div className="login__footer">
+        <LoginForm name="login" title="Вход" buttonName="Войти" onChange={this.handleChange} onSubmit={this.handleSubmit}>
+          <div className="login__footer">
             <p className="login__footer-title">Ещё не зарегистрированы?</p>
             <Link to="/signup" className="login__footer-link">Регистрация</Link>
           </div>
@@ -62,11 +59,8 @@ class Login extends React.Component {
 
       </div>
 
-
     )
-
-
   }
 }
 
-export default withRouter(Login);
+export default withRouter(Login)
