@@ -4,11 +4,7 @@ import goodRegistrationPath from '../images/good_registration.svg';
 import badRegistrationPath from '../images/bad_registration.svg';
 
 class InfoTooltip extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-  
+      
     render() {
 
         return (

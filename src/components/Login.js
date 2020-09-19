@@ -26,22 +26,14 @@ class Login extends React.Component {
   }
 
 
-
-
-
   handleSubmit(e) {
     e.preventDefault();
-    //if (!this.state.username || !this.state.password) {
-    //  return;
-    //}
     auth.authorize(this.state.username, this.state.password)
       .then((data) => {
-        console.log(data.token);
         if (data.token) {
           this.setState({ username: '', password: '' }, 
           () => {
             this.props.handleLogin();
-            this.props.history.push('/myprofile');
           })
         }
       })

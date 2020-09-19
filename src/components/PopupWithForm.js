@@ -2,10 +2,6 @@ import React from 'react';
 import closeButtonPath from '../images/close_button.svg';
 
 class PopupWithForm extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
   
     render () {
 

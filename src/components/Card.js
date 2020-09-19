@@ -7,10 +7,6 @@ class Card extends React.Component {
 
     static contextType = CurrentUserContext;
 
-    constructor(props) {
-        super(props);
-    }
-
     onImageNotFound = (evt) => {
         evt.target.onerror = null;
         evt.target.src = notFoundImagePath;

@@ -29,27 +29,24 @@ class Register extends React.Component {
   
   handleSubmit = (e) => {
     e.preventDefault();
-      auth.register(this.state.username, this.state.password).then((res) => {
-        if(res){
-         this.props.history.push('/signin');
-         this.handleGoodRegistration();
-        
-        } else {
-          console.log('Произошла ошибка.');
-          this.handleBadRegistration();
-        }
-      });
+    auth.register(this.state.username, this.state.password).then((res) => {
+      if (res) {
+        this.handleGoodRegistration();
+      } else {
+        console.log('Произошла ошибка.');
+        this.handleBadRegistration();
+      }
+    });
     
   }
 
   handleClose = () => {
-    this.setState({ isRegistrationPopupOpen: false });
-
-    
+    this.setState({ isRegistrationPopupOpen: false }, () => {this.props.history.push('/signin')})
   }
 
   handleGoodRegistration = () => {
-      this.setState({ isRegistrationPopupOpen: true,
+      
+    this.setState({ isRegistrationPopupOpen: true,
         infoTooltipTitle: "Вы успешно зарегистрировались!",
         infoTooltipRegistered: true })
   }

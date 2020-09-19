@@ -4,10 +4,6 @@ import notFoundImagePath from '../images/not_found.svg';
 
 class ImagePopup extends React.Component {
     
-    constructor(props) {
-        super(props);
-    }
-    
     onImageNotFound = (evt) => {
         evt.target.onerror = null;
         evt.target.src = notFoundImagePath;

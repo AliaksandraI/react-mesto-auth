@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, withRouter, Link } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 
 import MyProfile from './MyProfile';
@@ -34,7 +34,7 @@ class App extends React.Component {
         this.handleTokenCheck();
     } 
 
-    handleTokenCheck() {
+    handleTokenCheck () {
         if (localStorage.getItem('jwt')) {
             const jwt = localStorage.getItem('jwt');
             auth.checkToken(jwt).then((res) => {
@@ -52,15 +52,20 @@ class App extends React.Component {
         }
     }
 
-    handleLogin (){
+    handleLogin = () => {
         this.setState({
             loggedIn: true
-        })
+        }, () => {this.handleTokenCheck()});
     }
 
-    handleLogout() {
+    handleLogout = () => {
         localStorage.removeItem('jwt');
-        
+        this.setState({
+            loggedIn: false,
+            UserData:{
+                email: "email"
+            }
+        });
     }
 
     render() {
