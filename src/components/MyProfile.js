@@ -1,5 +1,4 @@
 import React from 'react';
-import api from '../utils/Api';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -31,14 +30,14 @@ class MyProfile extends React.Component {
 
 
     componentDidMount() {
-        api.getInitialCards()
+        this.props.getInitialCards()
         .then(cards => {
             this.setState({ cards: cards });
         }).catch(err => {
             console.log(err);
         });
 
-        api.getUserInfo()
+        this.props.getUserInfo()
         .then (user => {
             this.setState({currentUser: user});
         }).catch(err => {
@@ -90,7 +89,7 @@ class MyProfile extends React.Component {
 
     handleCardLike = (card) => {
         const myLike = card.likes.find((like) => like._id === this.state.currentUser._id);
-        const promise = myLike ? api.dislikeCard(card._id) : api.likeCard(card._id);
+        const promise = myLike ? this.props.dislikeCard(card) : this.props.likeCard(card);
 
         promise.then((newCard) => {
             const newCards = this.state.cards.map((c) => c._id === card._id ? newCard : c);
@@ -100,7 +99,7 @@ class MyProfile extends React.Component {
 
 
     handleCardDelete = (card) => {     
-        api.deleteCard(card._id)
+        this.props.deleteCard(card)
             .then(() => {
                 const newCards = this.state.cards.filter((c) => c._id !== card._id);
                 this.setState({cards: newCards});
@@ -110,38 +109,40 @@ class MyProfile extends React.Component {
     }
 
     handleAddPlaceSubmit = (name, link) => {
-        api.addNewCard(name, link)
+        this.props.addNewCard(name, link)
         .then ((newCard) =>{
             console.log(newCard);
             this.setState({cards:[...this.state.cards, newCard]}); 
-        }).catch(err => {
+        })
+        .then(this.closeAllPopups())
+        .catch(err => {
             console.log(err);
         });
-
-        this.closeAllPopups();
     }
 
     
     handleUpdateUser = ({name, about}) => {
-        api.updateUserInfo(name, about)
+        this.props.updateUserInfo(name, about)
         .then (user => {
             this.setState({currentUser: user});
-        }).catch(err => {
+        })
+        .then(this.closeAllPopups())
+        .catch(err => {
             this.setState({currentUser: this.createDefaultUser()});
             console.log(err);
         });
-        this.closeAllPopups();
     }
 
     handleUpdateAvatar = ({avatar}) => {
-        api.updateUserAvatar(avatar)
+        this.props.updateUserAvatar(avatar)
         .then (user => {
             this.setState({currentUser: user});
-        }).catch(err => {
+        })
+        .then(this.closeAllPopups())
+        .catch(err => {
             this.setState({currentUser: this.createDefaultUser()});
-            console.log(err);
+              console.log(err);
         });
-        this.closeAllPopups();
     } 
 
     handleEditAvatarClick = () => {

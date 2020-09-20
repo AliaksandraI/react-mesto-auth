@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Header from './Header';
-import * as auth from '../auth.js';
 import LoginForm from './LoginForm';
 import InfoTooltip from './InfoTooltip';
 
@@ -29,13 +28,14 @@ class Register extends React.Component {
   
   handleSubmit = (e) => {
     e.preventDefault();
-    auth.register(this.state.username, this.state.password).then((res) => {
-      if (res) {
-        this.handleGoodRegistration();
-      } else {
-        console.log('Произошла ошибка.');
-        this.handleBadRegistration();
+    this.props.register(this.state.username, this.state.password)
+    .then((res) => {
+        this.handleGoodRegistration();  
       }
+    )
+    .catch((err) => {
+      console.log('Произошла ошибка.');
+      this.handleBadRegistration();
     });
     
   }

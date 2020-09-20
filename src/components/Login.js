@@ -1,6 +1,5 @@
 import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import * as auth from '../auth.js'
 import Header from './Header'
 import LoginForm from './LoginForm'
 
@@ -25,7 +24,7 @@ class Login extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    auth.authorize(this.state.username, this.state.password)
+    this.props.authorize(this.state.username, this.state.password)
       .then((data) => {
         if (data.token) {
           this.setState({ username: '', password: '' },
