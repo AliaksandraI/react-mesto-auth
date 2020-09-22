@@ -1,25 +1,35 @@
 import React from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter, BrowserRouter, Router } from 'react-router-dom';
 
 import api from '../utils/Api';
-import MyProfile from './MyProfile';
 import Login from './Login.js';
 import Register from './Register.js';
 import ProtectedRoute from './ProtectedRoute';
 import InfoTooltip from './InfoTooltip.js';
+import MyProfile from './MyProfile'
+import history from './history';
+
+
+import FakeAvatarPath from '../images/гора_эльбрус.jpg';
 import * as auth from '../utils/auth';
 
 class App extends React.Component {
 
 
-    constructor(){
+    constructor() {
         super();
-      
+
         this.state = {
             loggedIn: false,
-            UserData:{
+            UserData: {
                 email: "email"
-            }
+            },
+            isEditProfilePopupOpen: false,
+            isAddPlacePopupOpen: false,
+            isEditAvatarPopupOpen: false,
+            selectedCard: null,
+            currentUser: this.createDefaultUser(),
+            cards: []
         }
 
         this.handleLogin = this.handleLogin.bind(this);
@@ -28,20 +38,41 @@ class App extends React.Component {
 
     componentDidMount() {
         this.handleTokenCheck();
-    } 
+    }
 
-    handleTokenCheck () {
-        if (localStorage.getItem('jwt')) {
-            const jwt = localStorage.getItem('jwt');
+    getInitialCards = () => {
+        return api.getInitialCards()
+        .then(cards => {
+            this.setState({ cards: cards });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    getUserInfo = () => {
+        return api.getUserInfo()
+        .then(user => {
+            this.setState({ currentUser: user });
+        }).catch(err => {
+            this.setState({ currentUser: this.createDefaultUser() });
+            console.log(err);
+        });
+    }
+
+    handleTokenCheck() {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt) {
             auth.checkToken(jwt).then((res) => {
                 if (res) {
                     this.setState({
                         loggedIn: true,
-                        UserData:{
+                        UserData: {
                             email: res.data.email
                         }
                     }, () => {
-                        this.props.history.push("/");
+                        history.push("/myprofile");
+                        this.getUserInfo(); 
+                        this.getInitialCards();
                     });
                 }
             });
@@ -51,51 +82,20 @@ class App extends React.Component {
     handleLogin = () => {
         this.setState({
             loggedIn: true
-        }, () => {this.handleTokenCheck()});
+        }, () => { this.handleTokenCheck()});
     }
 
     handleLogout = () => {
         localStorage.removeItem('jwt');
         this.setState({
             loggedIn: false,
-            UserData:{
+            UserData: {
                 email: "email"
             }
         });
     }
 
-    getInitialCards = () => {
-        return api.getInitialCards();
-    }
-
-    getUserInfo = () => {
-        return api.getUserInfo();
-    }
-
-    deleteCard =(card) => {
-        return api.deleteCard(card._id)
-    }
-
-    updateUserInfo = (name, about) => {
-        return api.updateUserInfo(name, about)
-    }
-
-    updateUserAvatar = (avatar) => {
-        return api.updateUserAvatar(avatar)
-    }
-
-    addNewCard = (name, link) => {
-        return api.addNewCard(name, link)
-    }
-
-    dislikeCard = (card) => {
-        return api.dislikeCard(card._id)
-    }
-
-    likeCard = (card) => {
-        return api.likeCard(card._id)
-    }
-
+    
     authorize = (username, password) => {
         return auth.authorize(username, password)
     }
@@ -104,13 +104,139 @@ class App extends React.Component {
         return auth.register(username, password)
     }
 
-    render() {
+    handleCardLike = (card) => {
+        console.log(card);
+        const myLike = card.likes.find((like) => like._id === this.state.currentUser._id);
+        const promise = myLike ? api.dislikeCard(card._id) : api.likeCard(card._id);
+
+        promise.then((newCard) => {
+            const newCards = this.state.cards.map((c) => c._id === card._id ? newCard : c);
+            this.setState({ cards: newCards });
+        });
+    }
+
+
+    handleCardDelete = (card) => {
+        api.deleteCard(card._id)
+            .then(() => {
+                const newCards = this.state.cards.filter((c) => c._id !== card._id);
+                this.setState({ cards: newCards });
+            }).catch(err => {
+                console.log(err);
+            });
+    }
+
+    handleAddPlaceSubmit = (name, link) => {
+        api.addNewCard(name, link)
+            .then((newCard) => {
+                console.log(newCard);
+                this.setState({ cards: [...this.state.cards, newCard] });
+            })
+            .then(() => {
+                this.closeAllPopups();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+
+    handleUpdateUser = ({ name, about }) => {
+        api.updateUserInfo(name, about)
+            .then(user => {
+                this.setState({ currentUser: user });
+            })
+            .then(() => {
+                this.closeAllPopups();
+            })
+            .catch(err => {
+                this.setState({ currentUser: this.createDefaultUser() });
+                console.log(err);
+            });
+    }
+
+    handleUpdateAvatar = ({ avatar }) => {
+        api.updateUserAvatar(avatar)
+            .then(user => {
+                this.setState({ currentUser: user });
+            })
+            .then(() => {
+                this.closeAllPopups();
+            })
+            .catch(err => {
+                this.setState({ currentUser: this.createDefaultUser() });
+                console.log(err);
+            });
+    }
+
+    handleEditAvatarClick = () => {
+        this.setState({ isEditAvatarPopupOpen: true });
+    }
+
+    handleEditProfileClick = () => {
+        this.setState({ isEditProfilePopupOpen: true });
+    }
+
+    handleAddPlaceClick = () => {
+        this.setState({ isAddPlacePopupOpen: true });
+    }
+
+    handleAddPlaceClick = () => {
+        this.setState({ isAddPlacePopupOpen: true });
+    }
+
+    handleCardClick = (card) => {
+        this.setState({ selectedCard: card });
+    }
+
+    closeAllPopups = () => {
+        this.setState({
+            isEditProfilePopupOpen: false,
+            isAddPlacePopupOpen: false,
+            isEditAvatarPopupOpen: false,
+            selectedCard: null
+        });
+    }
+
+    createDefaultUser = () => {
+        return {
+            _id: -1,
+            name: 'No name',
+            about: 'No description',
+            avatar: FakeAvatarPath
+        };
+    }
+
+
+    render = () => {
         return (
-            <>
+            <Router history={history}>
                 <main className="content">
                     <Switch>
-                        <ProtectedRoute path="/myprofile" loggedIn={this.state.loggedIn} userEmail={this.state.UserData.email} handleLogout={this.handleLogout} getInitialCards={this.getInitialCards} getUserInfo={this.getUserInfo} deleteCard={this.deleteCard} updateUserInfo={this.updateUserInfo} updateUserAvatar={this.updateUserAvatar} addNewCard={this.addNewCard} dislikeCard={this.dislikeCard} likeCard={this.likeCard} component={MyProfile} />
-                       
+                        <ProtectedRoute path="/myprofile" 
+                        currentUser={this.state.currentUser}
+                        loggedIn={this.state.loggedIn} 
+                        userEmail={this.state.UserData.email} 
+                        handleLogout={this.handleLogout} 
+                        handleEditAvatarClick={this.handleEditAvatarClick}
+                        handleEditProfileClick={this.handleEditProfileClick}
+                        handleAddPlaceClick={this.handleAddPlaceClick}
+                        handleCardClick={this.handleCardClick}
+                        cards={this.state.cards}
+                        handleCardLike={this.handleCardLike}
+                        handleCardDelete={this.handleCardDelete}
+                        selectedCard={this.state.selectedCard}
+                        closeAllPopups={this.closeAllPopups}
+                        handleUpdateUser={this.handleUpdateUser}
+                        isEditProfilePopupOpen={this.state.isEditProfilePopupOpen}
+                        handleAddPlaceSubmit={this.handleAddPlaceSubmit}
+                        isAddPlacePopupOpen={this.state.isAddPlacePopupOpen}
+                        onUpdateAvatar={this.handleUpdateAvatar}
+                        isEditAvatarPopupOpen={this.state.isEditAvatarPopupOpen}
+                        getInitialCards = {this.getInitialCards}
+                        getUserInfo = {this.getUserInfo}
+                        component={MyProfile} /> 
+
                         <Route path="/tips" loggedIn={this.state.loggedIn} component={InfoTooltip} />
 
                         <Route path="/signup">
@@ -122,16 +248,15 @@ class App extends React.Component {
                         </Route>
 
                         <Route path="*">
-                            {this.state.loggedIn ? <Redirect to="/myprofile" /> : <Redirect to="/signin" />}
+                            { this.state.loggedIn ? <Redirect to="/myprofile" /> : <Redirect to="/signin" /> }
                         </Route>
 
                     </Switch>
                 </main>
-            </>
-
+            </Router>
         );
     }
-}    
+}
 
 export default withRouter(App);
 
