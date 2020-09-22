@@ -14,6 +14,11 @@ import '../index.css';
 class MyProfile extends React.Component {
     static contextType = CurrentUserContext;
 
+    componentDidMount() {
+        this.props.getInitialCards();
+        this.props.getUserInfo();
+    }
+
     render () {
         return (        
             <div className="page">

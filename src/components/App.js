@@ -41,7 +41,7 @@ class App extends React.Component {
     }
 
     getInitialCards = () => {
-        return api.getInitialCards()
+        api.getInitialCards()
         .then(cards => {
             this.setState({ cards: cards });
         }).catch(err => {
@@ -50,7 +50,7 @@ class App extends React.Component {
     }
 
     getUserInfo = () => {
-        return api.getUserInfo()
+        api.getUserInfo()
         .then(user => {
             this.setState({ currentUser: user });
         }).catch(err => {
@@ -71,8 +71,6 @@ class App extends React.Component {
                         }
                     }, () => {
                         history.push("/myprofile");
-                        this.getUserInfo(); 
-                        this.getInitialCards();
                     });
                 }
             });
@@ -175,10 +173,6 @@ class App extends React.Component {
 
     handleEditProfileClick = () => {
         this.setState({ isEditProfilePopupOpen: true });
-    }
-
-    handleAddPlaceClick = () => {
-        this.setState({ isAddPlacePopupOpen: true });
     }
 
     handleAddPlaceClick = () => {
